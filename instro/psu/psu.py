@@ -62,11 +62,11 @@ class PSUDriverBase(abc.ABC):
         raise NotImplementedError(f"get_output_status is not implemented for {type(self).__name__}")
 
     def get_voltage_setpoint(self, channel: int) -> float:
-        """Query the configured voltage setpoint (volts) on `channel`."""
+        """Query the configured voltage setpoint (volts) on `channel`; only active in constant voltage mode."""
         raise NotImplementedError(f"get_voltage_setpoint is not implemented for {type(self).__name__}")
 
     def get_current_setpoint(self, channel: int) -> float:
-        """Query the configured current-limit setpoint (amperes) on `channel`."""
+        """Query the configured current setpoint (amperes) on `channel`; only active in constant current mode."""
         raise NotImplementedError(f"get_current_setpoint is not implemented for {type(self).__name__}")
 
     def set_overvoltage_protection_level(self, voltage: float, channel: int) -> None:
@@ -306,7 +306,7 @@ class InstroPSU(Instrument):
         )
 
     def get_voltage_setpoint(self, channel: int, **kwargs) -> Measurement | None:
-        """Query the configured voltage setpoint (volts) on ``channel``. Returns ``None`` if unavailable."""
+        """Query the voltage setpoint (volts) on ``channel``; active in CV mode. Returns ``None`` if unavailable."""
         return self._execute_measurement(
             self._driver.get_voltage_setpoint,
             channel=channel,
@@ -316,7 +316,7 @@ class InstroPSU(Instrument):
         )
 
     def get_current_setpoint(self, channel: int, **kwargs) -> Measurement | None:
-        """Query the configured current-limit setpoint (amperes) on ``channel``. Returns ``None`` if unavailable."""
+        """Query the current setpoint (amperes) on ``channel``; active in CC mode. Returns ``None`` if unavailable."""
         return self._execute_measurement(
             self._driver.get_current_setpoint,
             channel=channel,

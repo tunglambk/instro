@@ -371,6 +371,11 @@ Every measurement/command call produces a channel keyed under `{name}.{descripto
 | `start()` | Begin background telemetry daemon |
 | `stop()` | End background telemetry daemon |
 
+<Note>
+`get_voltage_setpoint()` and `get_current_setpoint()` return the configured target the supply is programmed to reach, not the measured output (`get_voltage()`/`get_current()`). 
+A supply can't activate independent voltage and current setpoints at the same time. `get_voltage_setpoint()` reflects the voltage target while the supply is in constant-voltage (CV) mode, and `get_current_setpoint()` reflects the current target while it's in constant-current (CC) mode. 
+</Note>
+
 # Simulated Power Supply
 
 For development and testing without physical hardware, Nominal Instrumentation includes a local SCPI power-supply simulator. See [PSU simulator](/instrumentation/psu-simulator) for the quickstart, usage notes, and supported command set.

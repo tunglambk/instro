@@ -354,8 +354,8 @@ Every measurement/command call produces a channel keyed under `{name}.{descripto
 | `get_current(channel=N)` | Read measured output current in amperes |
 | `output_enable(enable, channel=N)` | Enable (True) or disable (False) the output |
 | `get_output_status(channel=N)` | Query output enable state (returns Measurement with bool value) |
-| `get_voltage_setpoint(channel=N)` | Read the configured voltage setpoint in volts (only regulates the output while in CV mode) |
-| `get_current_setpoint(channel=N)` | Read the configured current-limit setpoint in amperes (only regulates the output while in CC mode) |
+| `get_voltage_setpoint(channel=N)` | Read the configured voltage setpoint in volts (measured output may differ outside CV mode) |
+| `get_current_setpoint(channel=N)` | Read the configured current-limit setpoint in amperes (measured output may differ outside CC mode) |
 | `set_overvoltage_protection_level(voltage, channel=N)` | Set the overvoltage protection threshold in volts |
 | `get_overvoltage_protection_level(channel=N)` | Read the overvoltage protection threshold in volts |
 | `set_overvoltage_protection_enabled(enabled, channel=N)` | Enable or disable overvoltage protection |
@@ -372,8 +372,7 @@ Every measurement/command call produces a channel keyed under `{name}.{descripto
 | `stop()` | End background telemetry daemon |
 
 <Note>
-`get_voltage_setpoint()` and `get_current_setpoint()` return the configured target the supply is programmed to reach, not the measured output (`get_voltage()`/`get_current()`).
-CV/CC mode only identifies which setpoint is currently regulating the output. `get_voltage_setpoint()` regulates the output while the supply is in constant-voltage (CV) mode, and `get_current_setpoint()` regulates the output while it's in constant-current (CC) mode.
+Both the voltage setpoint and the current-limit setpoint stay programmed and readable regardless of mode. CV/CC mode determines which setpoint currently regulates the output. The measured output can differ from the setpoint that isn't in control.
 </Note>
 
 # Simulated Power Supply
@@ -440,10 +439,10 @@ def get_output_status(self, channel: int) -> bool:
     """Query and return the output enable status on `channel`."""
 
 def get_voltage_setpoint(self, channel: int) -> float:
-    """Query the configured voltage setpoint (volts) on `channel`; only regulates the output in constant voltage mode."""
+    """Query the configured voltage setpoint (volts) on `channel`; measured output may differ outside constant voltage mode."""
 
 def get_current_setpoint(self, channel: int) -> float:
-    """Query the configured current-limit setpoint (amperes) on `channel`; only regulates the output in constant current mode."""
+    """Query the configured current-limit setpoint (amperes) on `channel`; measured output may differ outside constant current mode."""
 
 def set_overvoltage_protection_level(self, voltage: float, channel: int) -> None:
     """Set the overvoltage protection threshold (volts) on `channel`."""

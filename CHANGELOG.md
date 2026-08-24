@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.14.0](https://github.com/nominal-io/instro/compare/instro-v1.13.0...instro-v1.14.0) (2026-08-24)
+
+
+### Features
+
+* **awg:** add burst to Keysight 33521B driver ([#405](https://github.com/nominal-io/instro/issues/405)) ([bc38a6b](https://github.com/nominal-io/instro/commit/bc38a6b183904c00718d92b8f407dda031fa6e43))
+* **awg:** add sweep to Keysight 33521B driver ([#410](https://github.com/nominal-io/instro/issues/410)) ([a55974c](https://github.com/nominal-io/instro/commit/a55974c1cbecc561e721440556dc2031dd3d0faa))
+
 ## [1.13.0](https://github.com/nominal-io/instro/compare/instro-v1.12.0...instro-v1.13.0) (2026-08-24)
 
 

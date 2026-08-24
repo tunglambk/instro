@@ -354,8 +354,8 @@ Every measurement/command call produces a channel keyed under `{name}.{descripto
 | `get_current(channel=N)` | Read measured output current in amperes |
 | `output_enable(enable, channel=N)` | Enable (True) or disable (False) the output |
 | `get_output_status(channel=N)` | Query output enable state (returns Measurement with bool value) |
-| `get_voltage_setpoint(channel=N)` | Read the configured voltage setpoint in volts (measured output may differ outside CV mode) |
-| `get_current_setpoint(channel=N)` | Read the configured current-limit setpoint in amperes (measured output may differ outside CC mode) |
+| `get_voltage_setpoint(channel=N)` | Read the configured voltage setpoint in volts (may differ from actual voltage output outside of constant voltage mode) |
+| `get_current_setpoint(channel=N)` | Read the configured current-limit setpoint in amperes (may differ from actual current-limit output outside of constant current mode) |
 | `set_overvoltage_protection_level(voltage, channel=N)` | Set the overvoltage protection threshold in volts |
 | `get_overvoltage_protection_level(channel=N)` | Read the overvoltage protection threshold in volts |
 | `set_overvoltage_protection_enabled(enabled, channel=N)` | Enable or disable overvoltage protection |
@@ -372,7 +372,8 @@ Every measurement/command call produces a channel keyed under `{name}.{descripto
 | `stop()` | End background telemetry daemon |
 
 <Note>
-Both the voltage setpoint and the current-limit setpoint stay programmed and readable regardless of mode. CV/CC mode determines which setpoint currently regulates the output. The measured output can differ from the setpoint that isn't in control.
+Both the voltage setpoint and the current-limit setpoint stay programmed and readable regardless of mode. Constant Voltage (CV)/Constant Current (CC) mode determines which setpoint currently regulates the output. 
+The actual measured voltage may differ from the voltage setpoint when not in CV mode. Similarly, the actual measured current may differ from the current-limit setpoint when not in CC mode.
 </Note>
 
 # Simulated Power Supply

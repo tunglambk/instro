@@ -62,11 +62,11 @@ class PSUDriverBase(abc.ABC):
         raise NotImplementedError(f"get_output_status is not implemented for {type(self).__name__}")
 
     def get_voltage_setpoint(self, channel: int) -> float:
-        """Query the configured voltage setpoint (volts) on `channel`; measured output may differ outside constant voltage mode."""
+        """Query the configured voltage setpoint in volts (may differ from actual voltage output outside of constant voltage mode)"""
         raise NotImplementedError(f"get_voltage_setpoint is not implemented for {type(self).__name__}")
 
     def get_current_setpoint(self, channel: int) -> float:
-        """Query the configured current-limit setpoint (amperes) on `channel`; measured output may differ outside constant current mode."""
+        """Query the configured current-limit setpoint in amperes (may differ from actual current output outside of constant current mode)"""
         raise NotImplementedError(f"get_current_setpoint is not implemented for {type(self).__name__}")
 
     def set_overvoltage_protection_level(self, voltage: float, channel: int) -> None:
@@ -306,7 +306,7 @@ class InstroPSU(Instrument):
         )
 
     def get_voltage_setpoint(self, channel: int, **kwargs) -> Measurement | None:
-        """Query the voltage setpoint (volts) on ``channel``; measured output may differ outside CV mode. Returns ``None`` if unavailable."""
+        """Query the voltage setpoint (volts) on ``channel``; Returns ``None`` if unavailable."""
         return self._execute_measurement(
             self._driver.get_voltage_setpoint,
             channel=channel,
@@ -316,7 +316,7 @@ class InstroPSU(Instrument):
         )
 
     def get_current_setpoint(self, channel: int, **kwargs) -> Measurement | None:
-        """Query the current-limit setpoint (amperes) on ``channel``; measured output may differ outside CC mode. Returns ``None`` if unavailable."""
+        """Query the current-limit setpoint (amperes) on ``channel``; Returns ``None`` if unavailable."""
         return self._execute_measurement(
             self._driver.get_current_setpoint,
             channel=channel,
